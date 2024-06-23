@@ -52,14 +52,11 @@ jobs:
           fi
 
       - name: Make OPPO R11 Anykernel3
+        if: env.CHECK_FILE_IS_OK == 'true'
         run: |
-          cd $GITHUB_WORKSPACE/workdir
-          git clone https://github.com/osm0sis/AnyKernel3 --depth=1 AnyKernel3
-          sed -i 's/do.devicecheck=1/do.devicecheck=0/g' AnyKernel3/anykernel.sh
-          sed -i 's!BLOCK=/dev/block/platform/omap/omap_hsmmc.0/by-name/boot;!BLOCK=auto;!g' AnyKernel3/anykernel.sh
-          sed -i 's/IS_SLOT_DEVICE=0;/is_slot_device=auto;/g' AnyKernel3/anykernel.sh
-          cp source/out/arch/arm64/boot/Image.gz-dtb AnyKernel3/
-          rm -rf AnyKernel3/.git* AnyKernel3/README.md
+          git clone https://github.com/WenHao2130/android_kernel_oppo_sdm660/ -b prebuilt_ak3 --depth 1 $GITHUB_WORKSPACE/workdir/ak3
+          rm -r $GITHUB_WORKSPACE/workdir/ak3/.git
+          cp $GITHUB_WORKSPACE/workdir/source/out/arch/arm64/boot/Image.gz-dtb $GITHUB_WORKSPACE/workdir/ak3
 
       - name: Upload OPPO R11 Kernel
         if: env.CHECK_FILE_IS_OK == 'true'
@@ -73,4 +70,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: AnyKernel3_oppo_sdm660_16051
-          path: workdir/AnyKernel3/*
+          path: workdir/ak3/*
