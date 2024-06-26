@@ -6,7 +6,7 @@ on:
 jobs:
   build:
     name: Only Build OPPO R11 Kernel by ${{ github.actor }}
-    runs-on: ubuntu-least
+    runs-on: ubuntu-latest
     steps:
 
       - name: Set SWAP to 5GiB
@@ -44,6 +44,7 @@ jobs:
           rm -rf out/.config.old
           cp .config out
           cp .config.old out
+          make mrproper
           make -j$(nproc --all) O=out
 
       - name: Check a kernel output files
