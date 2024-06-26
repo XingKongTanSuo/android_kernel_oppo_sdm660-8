@@ -37,6 +37,7 @@ jobs:
           export SUBARCH="arm64"
           export CROSS_COMPILE="$GITHUB_WORKSPACE/workdir/gcc/bin/aarch64-linux-android-"
           cd $GITHUB_WORKSPACE/workdir/source
+          export PATH=$PATH:/workspaces/gcc/aarch64-linux-android-4.9/bin
           export OPPO_TARGET_DEVICE="MSM_16051"
           make O=out sdm660-perf_defconfig
           make -j$(nproc --all) O=out
