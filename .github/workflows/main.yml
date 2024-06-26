@@ -44,7 +44,7 @@ jobs:
           rm -rf out/.config.old
           cp .config out
           cp .config.old out
-          
+          make mrproper
           make -j$(nproc --all) O=out
 
       - name: Check a kernel output files
