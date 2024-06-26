@@ -40,6 +40,7 @@ jobs:
           cd $GITHUB_WORKSPACE/workdir/source
           export OPPO_TARGET_DEVICE="MSM_16051"
           make O=out sdm660-perf_defconfig
+          make mrproper
           make -j$(nproc --all) O=out
 
       - name: Check a kernel output files
