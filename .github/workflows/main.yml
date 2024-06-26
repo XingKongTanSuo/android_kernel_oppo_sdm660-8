@@ -33,16 +33,14 @@ jobs:
         run: |
           export KBUILD_BUILD_HOST=Github-Action
           export KBUILD_BUILD_USER=$(echo ${{ github.actor }} | tr A-Z a-z)
-          clear
-          rm -rf out/
-          rm -rf kernel_log.log
           export ARCH="arm64"
+          export SUBARCH="arm64"
+          export CROSS_COMPILE="$GITHUB_WORKSPACE/workdir/gcc/bin/aarch64-linux-android-"
+          export PATH=$PATH:$GITHUB_WORKSPACE/workdir/gcc/aarch64-linux-android-4.9/bin
+          cd $GITHUB_WORKSPACE/workdir/source
           export OPPO_TARGET_DEVICE="MSM_16051"
-          export CROSS_COMPILE=aarch64-linux-android-
-          export PATH=$PATH:/workspaces/gcc/aarch64-linux-android-4.9/bin
-          clear
           make O=out sdm660-perf_defconfig
-          make ARCH=arm64 O=out -j8 2>&1 | tee kernel_log.log
+          make -j$(nproc --all) O=out
 
       - name: Check a kernel output files
         run: |
