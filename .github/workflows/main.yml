@@ -6,7 +6,7 @@ on:
 jobs:
   build:
     name: Only Build OPPO R11 Kernel by ${{ github.actor }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-least
     steps:
 
       - name: Set SWAP to 5GiB
@@ -40,6 +40,10 @@ jobs:
           cd $GITHUB_WORKSPACE/workdir/source
           export OPPO_TARGET_DEVICE="MSM_16051"
           make O=out sdm660-perf_defconfig
+          rm -rf out/.config
+          rm -rf out/.config.old
+          cp .config out
+          cp .config.old out
           make -j$(nproc --all) O=out
 
       - name: Check a kernel output files
