@@ -11,3 +11,5 @@ jobs:
     steps:
     - name: configure2
       run: cat /etc/apt/sources.list
+    - name: test2
+      run: cat /etc/apt/apt-mirrors.txt
