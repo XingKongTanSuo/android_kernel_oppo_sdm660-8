@@ -145,6 +145,7 @@
 
 #if GCC_VERSION < 30200
 # error Sorry, your compiler is too old - please upgrade it.
+#elif defined(CONFIG_ARM64) && GCC_VERSION < 50100 && !defined(__clang__)
 #endif
 
 #if GCC_VERSION < 30300
